@@ -26,11 +26,13 @@ SRCS := $(wildcard *.c) $(foreach D,$(SRC_DIRS),$(wildcard $D/*.c))
 
 
 # Host executable target.
-all : $(TARGET_DIR)/$(TARGET)
+#all : $(TARGET_DIR)/$(TARGET)
+all :	$(TARGET) #temporary
 
-$(TARGET_DIR)/$(TARGET) : build
-	$(CC) $(FLAGS) $(INC_FILES) $(SRCS) -o $(TARGET_DIR)/$(TARGET)
-
+#$(TARGET_DIR)/$(TARGET) : build
+$(TARGET) : build
+	$(CC) $(FLAGS) $(INC_FILES) $(SRCS) -o $(TARGET)
+	#$(CC) $(FLAGS) $(INC_FILES) $(SRCS) -o $(TARGET_DIR)/$(TARGET)
 build:
 	@mkdir -p bin
 
