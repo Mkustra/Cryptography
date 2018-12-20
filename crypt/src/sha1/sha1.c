@@ -67,12 +67,6 @@ void sha1_transform(SHA1Context_t * sha1_struct)
     W[t] |= sha1_struct->buf[t*4+3] << 0  & 0x000000FF;
   }
 
-  /*TEST*/
-  printf("\nMACIERZ:\n");
-  for (int i=0; i<16; i++)
-    printf("%x", W[i]);
-  printf("\n");
-  /*TEST*/
   /* SHA-1 rounds*/
   {
     ROUND0(A, B, C, D, E,  0)
@@ -178,7 +172,6 @@ bool sha1_update(SHA1Context_t * sha1_struct, uint8_t * buf, uint64_t size)
 
     if(sha1_struct->len % 64 == 0)
     {
-      printf("CHUJ");
       sha1_transform(sha1_struct);
     }
   }
@@ -198,6 +191,8 @@ void sha1_final(SHA1Context_t * sha1_struct)
       sha1_struct->buf[i] = 0;
     }
     sha1_transform(sha1_struct);
+
+    index = 0;
   }
 
   sha1_struct->buf[index] = 0x80;
@@ -205,7 +200,7 @@ void sha1_final(SHA1Context_t * sha1_struct)
   for(int i = index + 1; i < 56; i++)
     sha1_struct->buf[i] = 0;
 
-
+  sha1_struct->len *= 8;
 
   /* Counter low */
   sha1_struct->buf[63] = (uint8_t)((sha1_struct->len & 0x00000000000000FF) >>  0);

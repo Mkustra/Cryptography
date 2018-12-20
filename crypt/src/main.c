@@ -4,17 +4,16 @@
 
 int main()
 {
-  uint8_t buf[1024];
+  uint8_t buf[2000000];
 
   SHA1Context_t SHA1Context;
 
-
-  buf[0]='a';
-  buf[1]='a';
+  for(int i=0; i<1000000; i++)
+    buf[i]='a';
   /* TEST*/
 
   sha1_init(&SHA1Context);
-  sha1_update(&SHA1Context, buf, 1);
+  sha1_update(&SHA1Context, buf, 1000000);
   sha1_final(&SHA1Context);
 
   printf("\n");
